@@ -14,11 +14,14 @@ image_index = 30
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
 img_rows, img_cols = 28, 28
-im = imageio.imread(r"C:\Users\IvanovSD\Desktop\NumberTest\3sample.png")
+im = imageio.imread(r"C:\Users\тс\PycharmProjects\NumberRec\sample.png")
+print(im.shape)
 #im = imageio.imread("https://i.imgur.com/a3Rql9C.png")
 im = np.dot(im[...,:3], [0.2989, 0.587, 0.114])
 #im = im.reshape(1, img_rows, img_cols, 1)
 print (im.shape)
+for x in range (0, 28):
+    print (im[14][x])
 
 '''
 print ("Xtrain before")
@@ -34,6 +37,9 @@ gray = im
 plt.imshow(gray, cmap='Greys')
 plt.show()
 
+print ("gray before")
+print (gray.shape)
+
 '''
 gray = np.dot(im[...,:3], [0.2989, 0.587, 0.114])
 plt.imshow(gray, cmap = plt.get_cmap('gray'))
@@ -46,6 +52,13 @@ print (gray.shape)
 
 # normalize image
 gray = gray / 255
+
+for x in range (0, 28):
+    for y in range(0, 28):
+        print (x, y)
+        print (gray[0][x][y][0])
+
+#bytegray = bytearray(gray)
 
 print ("MODEL1:")
 prediction = model1.predict(gray)
