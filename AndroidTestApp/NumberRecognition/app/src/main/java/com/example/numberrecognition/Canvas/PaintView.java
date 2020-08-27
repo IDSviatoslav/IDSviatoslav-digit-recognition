@@ -1,4 +1,4 @@
-package com.example.numberrecognition;
+package com.example.numberrecognition.Canvas;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,17 +12,21 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
+import org.tensorflow.lite.Interpreter;
 
 import java.util.ArrayList;
 
 public class PaintView extends View {
 
-    public static int BRUSH_SIZE = 80;
+    public static int BRUSH_SIZE = 120;
     public static final int DEFAULT_BG_COLOR = Color.WHITE;
     private static final float TOUCH_TOLERANCE = 4;
+
     private float mX, mY;
     private Path mPath;
     private Paint mPaint;
@@ -59,15 +63,15 @@ public class PaintView extends View {
     }
 
     public void init(DisplayMetrics metrics) {
-        //int height = metrics.heightPixels;
-        //int width = metrics.widthPixels;
         Resources r = getResources();
+        float dpSideSize = metrics.widthPixels / metrics.density;
         float px = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                400,
+                dpSideSize,
                 r.getDisplayMetrics()
         );
-        int width = Math.round(px);int  height = width;
+        int width = Math.round(px);
+        int  height = width;
         mBitmap = Bitmap.createBitmap(height, width, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
 

@@ -1,4 +1,4 @@
-package com.example.numberrecognition;
+package com.example.numberrecognition.Canvas;
 
 import android.graphics.Path;
 

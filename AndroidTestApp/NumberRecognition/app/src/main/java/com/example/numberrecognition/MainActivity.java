@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -13,11 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.numberrecognition.Canvas.PaintView;
+import com.example.numberrecognition.Model.NumberPredictor;
 
 import java.io.FileOutputStream;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         paintView = (PaintView) findViewById(R.id.paintView);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         modelType = "model1";
 
         mModelTypeText = (TextView) findViewById(R.id.modelStatusText);
+
         mModSwitch = (Switch) findViewById(R.id.modelTypeSwitch);
         mModSwitch.setChecked(false);
         mModSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked == true) {
                     modelType = "model2";
-                    mModelTypeText.setText("Augmented");
+                    mModelTypeText.setText("Aug.");
                 }
                 else {
                     modelType = "model1";
@@ -73,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             NumberPredictor pred = new NumberPredictor(MainActivity.this, modelType);
-            int rawid = 0;
                 try {
                     Bitmap newBitmap = Bitmap.createScaledBitmap(paintView.mBitmap, 28, 28, false);
 
@@ -82,29 +84,11 @@ public class MainActivity extends AppCompatActivity {
                     FileOutputStream stream = getApplicationContext().openFileOutput(filename, Context.MODE_PRIVATE);
                     newBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     stream.close();
-                    char prediction = pred.interpret(pred.toGrayscale2(newBitmap));
-                    Log.i("ModelPrediction", Character.toString(prediction));
+                    char prediction = pred.interpret(newBitmap);
                     newBitmap.recycle();
                     mPredText.setText(String.valueOf(prediction));
-                    switch (prediction) {
-                        case '0': rawid = R.raw.s0; break;
-                        case '1': rawid = R.raw.s1; break;
-                        case '2': rawid = R.raw.s2; break;
-                        case '3': rawid = R.raw.s3; break;
-                        case '4': rawid = R.raw.s4; break;
-                        case '5': rawid = R.raw.s5; break;
-                        case '6': rawid = R.raw.s6; break;
-                        case '7': rawid = R.raw.s7; break;
-                        case '8': rawid = R.raw.s8; break;
-                        case '9': rawid = R.raw.s9; break;
-                    }
-                    Mp = MediaPlayer.create(MainActivity.this, rawid);
-                    Mp.start();
-                    while (Mp.isPlaying()) {
-                        // do nothing
-                    }
-                    Mp.release();
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     Log.e("My_Exception", Log.getStackTraceString(e));
                 }
             }
