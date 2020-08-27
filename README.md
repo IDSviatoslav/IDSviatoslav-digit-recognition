@@ -7,11 +7,11 @@ was augmented - rotated and zoomed in order to simulate the inconsistency of use
 
 ## Demo
 
-![Demo Gif 1](https://github.com/IDSviatoslav/NumberRecognition/blob/master/demo/normalModel.gif)  
+![Demo Gif 1](https://github.com/IDSviatoslav/digit-recognition/blob/master/demo/normalModel.gif)  
 *Note*: the first model, user input is accurate
   
-    
+
       
-![Demo Gif 1](https://github.com/IDSviatoslav/NumberRecognition/blob/master/demo/augModel.gif)  
+![Demo Gif 1](https://github.com/IDSviatoslav/digit-recognition/blob/master/demo/augModel.gif)  
 *Note*: first vs second model in case of sloppy user input
 
